@@ -1,9 +1,62 @@
-<div class="dashboard-container">
-  <h1>Welcome to Your Dashboard</h1>
-  <div class="account-summary">
-    <h2>Account Overview</h2>
-    <p>Your account balance: $5000</p>
-    <p>Total Transactions: 120</p>
+<header class="header">
+  <div class="logo-section">
+    <img src="assets/logo.png" alt="Tension Free Bank Logo" class="logo">
   </div>
-  
-</div>
+
+  <div class="bank-info">
+    <h1>Tension Free Bank Dashboard</h1>
+    <p>Welcome back! Your financial freedom journey begins here.</p>
+  </div>
+</header>
+
+<main class="main-content">
+  <!-- Account Overview Section -->
+  <div class="dashboard-card">
+    <h2>Account Overview</h2>
+    <div class="overview-cards">
+      <div *ngFor="let account of accounts" class="card" (click)="showAccountDetails(account)">
+        <div class="card-info">
+          <h3>{{ account.nickname }}</h3>
+          <p><strong>Account Number:</strong> 
+            <a href="#" (click)="showAccountDetails(account.id)">{{ account.maskedAccountNumber }}</a>
+          </p>
+          <p><strong>Balance:</strong> ${{ account.balance }} {{ account.currency }}</p>
+          <p><strong>Interest Rate:</strong> {{ account.interestRate }}%</p>
+          <p><strong>Account Type:</strong> {{ account.accountType }} ({{ account.accountSubType }})</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions -->
+  <div class="action-links">
+    <h3>Quick Actions</h3>
+    <div class="actions">
+      <button (click)="navigateToTransfer()">Move Money</button>
+      <button (click)="navigateToBillPayment()">Bill Payment</button>
+    </div>
+  </div>
+
+  <!-- Account Detailed View (Hidden by default) -->
+  <div class="account-details" *ngIf="selectedAccount">
+    <h3>Account Transactions: {{ selectedAccount.nickname }}</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Transaction ID</th>
+          <th>Date</th>
+          <th>Amount</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let transaction of selectedAccount.transactions">
+          <td>{{ transaction.id }}</td>
+          <td>{{ transaction.date | date }}</td>
+          <td>${{ transaction.amount }}</td>
+          <td>{{ transaction.status }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</main>

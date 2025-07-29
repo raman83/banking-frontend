@@ -1,0 +1,146 @@
+/* Header Styling */
+.header {
+    background-color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+  }
+  
+  .logo-section {
+    margin-bottom: 10px;
+  }
+  
+  .logo {
+    max-width: 120px;
+    height: auto;
+  }
+  
+  .bank-info h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .bank-info p {
+    font-size: 1.2rem;
+    color: #555;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Main Content Section Styling */
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+    max-width: 1400px;
+    padding: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Account Overview Section */
+  .dashboard-card {
+    width: 100%;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+  }
+  
+  /* Account Cards Layout */
+  .overview-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  /* Account Card Styling */
+  .card {
+    width: 280px;
+    height: 180px;
+    background-color: #f9f9f9;  /* Light background color */
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-10px); /* Hover effect */
+  }
+  
+  /* Account Information */
+  .card-info {
+    z-index: 1;
+    position: relative;
+    color: #333;  /* Set text color to dark for better readability */
+  }
+  
+  .card-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  
+  .card-info p {
+    font-size: 0.9rem;
+    margin: 5px 0;
+  }
+  
+  /* Quick Action Links */
+  .action-links {
+    width: 100%;
+    max-width: 1200px;
+    text-align: center;
+    margin-top: 30px;
+  }
+  
+  .actions button {
+    padding: 15px 30px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin: 10px;
+  }
+  
+  .actions button:hover {
+    background-color: #0056b3;
+  }
+  
+  /* Account Details Table */
+  .account-details {
+    width: 100%;
+    max-width: 1200px;
+    margin-top: 30px;
+  }
+  
+  .account-details table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .account-details th, .account-details td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .account-details th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+  }
+  

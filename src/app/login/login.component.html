@@ -4,19 +4,20 @@
   </div>
 
   <div class="bank-info">
-    <h1>Lalchi Lenden Bank</h1>
-    <p>Your gateway to secure and easy-to-use banking. Manage your finances effortlessly with our seamless platform.</p>
+    <h1>Tension Free Bank</h1>
+    <p>Because worrying about your bank account is so last season. We bring you peace of mind… and a little bit of risk, just for fun.</p>
   </div>
 </header>
 
 <main class="main-content">
+  <!-- Login Card Section -->
   <div class="login-card">
     <h2>Login to Your Account</h2>
 
     <form (ngSubmit)="login()">
       <div class="form-group">
         <label for="username">Username</label>
-        <input id="username" type="username" [(ngModel)]="username" name="username" placeholder="Enter your username" required />
+        <input id="username" type="text" [(ngModel)]="username" name="username" placeholder="Enter your username" required />
       </div>
 
       <div class="form-group">
@@ -37,14 +38,20 @@
     </div>
   </div>
 
+  <!-- Why Choose Us Section -->
   <div class="info-section">
     <h3>Why Choose Us?</h3>
-    <ul>
-      <li>Seamless Online Banking Experience</li>
-      <li>Secure Transactions with Two-Factor Authentication</li>
-      <li>24/7 Customer Support</li>
-      <li>Low Fees & High-Interest Savings Accounts</li>
-      <li>Easy Account Management from Anywhere</li>
-    </ul>
-  </div>
-</main>
+    <div class="features">
+      <div class="feature-item">
+        <h4>🔑 Seamless Online Banking Experience</h4>
+        <p>Experience banking like never before — easy, fast, and secure.</p>
+      </div>
+
+      <div class="feature-item">
+        <h4>🔒 Secure Transactions with Two-Factor Authentication</h4>
+        <p>Because your money deserves the best protection, just like your Netflix password.</p>
+      </div>
+
+      <div class="feature-item">
+        <h4>🕒 24/7 Customer Support</h4>
+        <p>We’re always here for you, whether it’s midnight or breakfast time. Call us anytime, we’ve got

@@ -8,9 +8,8 @@ import { CommonModule } from '@angular/common';  // Import CommonModule for *ngI
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  standalone: true,  // 
+  standalone: true,  // Standalone component
   imports: [CommonModule, FormsModule]  // Import CommonModule and FormsModule directly here
-
 })
 export class LoginComponent {
   username: string = '';  // Bind username
@@ -30,11 +29,21 @@ export class LoginComponent {
     this.loginService.login(credentials).subscribe(
       (response) => {
         console.log('Login successful!', response);
-        localStorage.setItem('token', response.token);
+
+        // Save token and expiry time
+        localStorage.setItem('token', response.accessToken);
+        localStorage.setItem('tokenExpiry', (Date.now() + (response.expiresIn * 1000)).toString()); // Store expiry time
+
+        // Redirect to dashboard
         this.router.navigate(['/dashboard']);
       },
       (error) => {
-        this.errorMessage = 'Invalid credentials. Please try again.';
+        // Handle error gracefully
+        if (error.status === 401 || error.status === 403) {
+          this.errorMessage = 'Invalid credentials. Please check your username and password.';
+        } else {
+          this.errorMessage = 'An unknown error occurred. Please try again later.';
+        }
         console.error('Login error:', error);
       }
     );
