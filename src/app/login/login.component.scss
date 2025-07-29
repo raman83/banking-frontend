@@ -1,0 +1,188 @@
+/* Basic Styling for Body */
+body {
+  background: linear-gradient(to right, #ff7e5f, #feb47b);
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden; /* Prevent scroll */
+}
+
+/* Header Styling */
+.header {
+  width: 100%;
+  padding: 20px;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.logo-section {
+  margin-bottom: 10px;
+}
+
+.logo {
+  max-width: 120px;  /* Resize logo */
+  height: auto;
+}
+
+.bank-info h1 {
+  font-size: 2.5rem;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.bank-info p {
+  font-size: 1.2rem;
+  color: #555;
+  margin-bottom: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Main Content Section Styling */
+.main-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 20px;
+  margin-top: 20px;
+}
+
+/* Login Card Styling */
+.login-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  text-align: center;
+  animation: slideIn 0.5s ease-out;
+}
+
+h2 {
+  color: #333;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 8px;
+  outline: none;
+  transition: border 0.3s ease-in-out;
+}
+
+input:focus {
+  border: 1px solid #ff7e5f;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 1.1rem;
+  color: white;
+  background-color: #ff7e5f;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+button:hover {
+  transform: translateY(-3px);
+  background-color: #feb47b;
+}
+
+/* Signup Link Styling */
+.signup-link {
+  margin-top: 20px;
+  position: relative; /* Ensure it's clickable */
+}
+
+.signup-link a {
+  color: #ff7e5f;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+  display: inline-block;
+  padding: 8px 0;
+  z-index: 10; /* Ensure it's above other elements */
+}
+
+.signup-link a:hover {
+  color: #feb47b;
+}
+
+/* Information Section Styling */
+.info-section {
+  width: 100%;
+  max-width: 500px;
+  padding: 40px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+}
+
+.info-section h3 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.info-section ul {
+  list-style-type: none;
+  padding: 0;
+  font-size: 1.1rem;
+  color: #555;
+}
+
+.info-section ul li {
+  margin: 10px 0;
+}
+
+/* Keyframe for the login card animation */
+@keyframes slideIn {
+  from {
+    transform: translateY(30px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .login-card, .info-section {
+    width: 100%;
+    max-width: none;
+  }
+}

@@ -1,0 +1,50 @@
+<header class="header">
+  <div class="logo-section">
+    <img src="assets/logo.png" alt="Lalchi Lenden Bank Logo" class="logo">
+  </div>
+
+  <div class="bank-info">
+    <h1>Lalchi Lenden Bank</h1>
+    <p>Your gateway to secure and easy-to-use banking. Manage your finances effortlessly with our seamless platform.</p>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="login-card">
+    <h2>Login to Your Account</h2>
+
+    <form (ngSubmit)="login()">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input id="username" type="username" [(ngModel)]="username" name="username" placeholder="Enter your username" required />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input id="password" type="password" [(ngModel)]="password" name="password" placeholder="Enter your password" required />
+      </div>
+
+      <button type="submit">Login</button>
+    </form>
+
+    <div class="signup-link">
+      <p>New to our bank? <a (click)="navigateToOnboard()">Sign up now</a></p>
+    </div>
+
+    <!-- Display error message if login fails -->
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <div class="info-section">
+    <h3>Why Choose Us?</h3>
+    <ul>
+      <li>Seamless Online Banking Experience</li>
+      <li>Secure Transactions with Two-Factor Authentication</li>
+      <li>24/7 Customer Support</li>
+      <li>Low Fees & High-Interest Savings Accounts</li>
+      <li>Easy Account Management from Anywhere</li>
+    </ul>
+  </div>
+</main>
