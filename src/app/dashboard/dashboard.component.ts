@@ -1,56 +1,88 @@
 import { Component, OnInit } from '@angular/core';
-import { AccountService } from './account.service';  // Assuming you have a service to get account data
-import { TransactionService } from './transaction.service';  // Service to get transactions
-import { FormsModule } from '@angular/forms';  // Import FormsModule for ngModel
-import { CommonModule } from '@angular/common';  // Import CommonModule for *ngIf
-
+import { AccountService } from './account.service';
+import { TransactionService } from './transaction.service';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  standalone: true,  // 
-  imports: [CommonModule, FormsModule]  // Import CommonModule and FormsModule directly here
+  standalone: true,
+  imports: [CommonModule, FormsModule]
 })
 export class DashboardComponent implements OnInit {
-  accounts: any[] = [];  // Array to hold accounts
-  selectedAccount: any;  // Account selected by user
-  currentPage: number = 1;  // Pagination for transactions
-  totalTransactions: number = 0;  // Total number of transactions for pagination
+  accounts: any[] = [];
+  selectedAccount: any;
+  currentPage: number = 1;
+  totalTransactions: number = 0;
+  totalPages: number = 0;  // To calculate total pages
+  errorMessage: string = '';  // For error handling
 
   constructor(
     private accountService: AccountService,
-    private transactionService: TransactionService
+    private transactionService: TransactionService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    // Get accounts from the backend
     this.accountService.getAccounts().subscribe((accounts: any[]) => {
       this.accounts = accounts;
     });
   }
 
-  // Method to handle the selection of an account
-  showAccountDetails(account: any) {
+  showAccountDetails(account: any, event: Event) {
+    event.preventDefault(); // Prevent default anchor behavior
     this.selectedAccount = account;
-    this.loadTransactions(1);  // Load the first page of transactions
+  
+    // Ensure account.id is available
+    if (this.selectedAccount && this.selectedAccount.id) {
+      this.loadTransactions(1);  // Load first page of transactions
+    } else {
+      console.error("Account ID is missing!");
+    }
   }
 
-  // Method to fetch transactions for the selected account
   loadTransactions(page: number) {
-    this.transactionService.getTransactions(this.selectedAccount.id, page).subscribe((data: any) => {
-      this.selectedAccount.transactions = data.transactions;
-      this.totalTransactions = data.totalTransactions;  // Set total transactions for pagination
-      this.currentPage = page;
-    });
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      this.transactionService.getTransactions(this.selectedAccount.id, page, token).subscribe((data: any) => {
+        console.log("Transactions received:", data);
+
+        if (data  && data.length > 0) {
+          this.selectedAccount.transactions = data;  // Set transactions
+          console.log("Transactions in selected account:", this.selectedAccount.transactions);
+
+          // Assuming backend sends total transaction count for pagination
+          this.totalTransactions = 100;  
+          this.totalPages = Math.ceil(this.totalTransactions / 5);  // Assuming 5 transactions per page
+          this.currentPage = page;
+        } else {
+          this.selectedAccount.transactions = [];  // Empty transactions if no data
+        }
+      }, error => {
+        console.error('Error fetching transactions:', error);
+        this.selectedAccount.transactions = [];  // Empty transactions on error
+        this.errorMessage = 'Error fetching transactions. Please try again.';
+      });
+    } else {
+      this.errorMessage = 'Session expired. Please login again.';
+    }
   }
 
-  // Navigation methods for quick actions
   navigateToTransfer() {
-    // Redirect to the transfer page (not implemented here)
+    // Implement logic for transfer page navigation
   }
 
   navigateToBillPayment() {
-    // Redirect to the bill payment page (not implemented here)
+    // Implement logic for bill payment page navigation
+  }
+
+  goToPage(page: number) {
+    if (page > 0 && page <= this.totalPages) {
+      this.loadTransactions(page);  // Load transactions for the selected page
+    }
   }
 }

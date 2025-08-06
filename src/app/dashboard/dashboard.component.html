@@ -14,11 +14,13 @@
   <div class="dashboard-card">
     <h2>Account Overview</h2>
     <div class="overview-cards">
-      <div *ngFor="let account of accounts" class="card" (click)="showAccountDetails(account)">
+      <div *ngFor="let account of accounts" class="card" (click)="showAccountDetails(account, $event)">
         <div class="card-info">
           <h3>{{ account.nickname }}</h3>
           <p><strong>Account Number:</strong> 
-            <a href="#" (click)="showAccountDetails(account.id)">{{ account.maskedAccountNumber }}</a>
+            <a href="#" (click)="showAccountDetails(account, $event)">
+              {{ account.maskedAccountNumber }}
+            </a>
           </p>
           <p><strong>Balance:</strong> ${{ account.balance }} {{ account.currency }}</p>
           <p><strong>Interest Rate:</strong> {{ account.interestRate }}%</p>
@@ -40,7 +42,14 @@
   <!-- Account Detailed View (Hidden by default) -->
   <div class="account-details" *ngIf="selectedAccount">
     <h3>Account Transactions: {{ selectedAccount.nickname }}</h3>
-    <table>
+    
+    <!-- Error Message Handling -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+
+    <!-- Transactions Table -->
+    <table *ngIf="selectedAccount.transactions?.length > 0">
       <thead>
         <tr>
           <th>Transaction ID</th>
@@ -51,12 +60,22 @@
       </thead>
       <tbody>
         <tr *ngFor="let transaction of selectedAccount.transactions">
-          <td>{{ transaction.id }}</td>
-          <td>{{ transaction.date | date }}</td>
-          <td>${{ transaction.amount }}</td>
+          <td>{{ transaction.transactionId }}</td>
+          <td>{{ transaction.postedDate | date }}</td>
+          <td>${{ transaction.amount.value }}</td>
           <td>{{ transaction.status }}</td>
         </tr>
       </tbody>
     </table>
+
+    <!-- No Transactions Message -->
+    <p *ngIf="!selectedAccount.transactions?.length">No transactions available.</p>
+
+    <!-- Pagination Controls -->
+    <div *ngIf="totalPages > 1">
+      <button (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1">Previous</button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages">Next</button>
+    </div>
   </div>
 </main>
