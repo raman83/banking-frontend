@@ -1,0 +1,22 @@
+<div class="payment-section">
+    <h3>Bill Payment</h3>
+  
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-grid">
+        <input type="text" placeholder="Debtor Name" formControlName="debtorName" />
+        <input type="text" placeholder="Debtor Account" formControlName="debtorAccount" />
+        <input type="text" placeholder="Biller Name" formControlName="billerName" />
+        <input type="text" placeholder="Bill Reference Number" formControlName="billReferenceNumber" />
+        <input type="number" placeholder="Amount" formControlName="amount" />
+        <input type="text" placeholder="Currency" formControlName="currency" />
+        <input type="text" placeholder="Purpose" formControlName="purpose" />
+        <input type="date" formControlName="requestedExecutionDate" />
+      </div>
+  
+      <button type="submit" [disabled]="form.invalid">Submit</button>
+  
+      <p *ngIf="success" class="success-msg">✅ Bill payment successful!</p>
+      <p *ngIf="error" class="error-msg">{{ error }}</p>
+    </form>
+  </div>
+  

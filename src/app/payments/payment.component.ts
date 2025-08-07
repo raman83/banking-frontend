@@ -1,59 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { PaymentService } from './payment.service';  // ✅ update path as needed
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { InternalTransferComponent } from './internal-transfer/internal-transfer.component';
+import { ExternalTransferComponent } from './external-transfer/external-transfer.component';
+import { BillPaymentComponent } from './bill/bill-payment.component';
 
 @Component({
   selector: 'app-payment',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MatTabsModule,
+    InternalTransferComponent,
+    ExternalTransferComponent,
+    BillPaymentComponent
+  ],
   templateUrl: './payment.component.html',
-  styleUrls: ['./payment.component.scss']   // ✅ this must match the file name and path
-
+  styleUrls: ['./payment.component.scss']
 })
-export class PaymentComponent implements OnInit {
-  form!: FormGroup;
-  success = false;
-  error = '';
-
-  constructor(private fb: FormBuilder, private http: HttpClient, private paymentService: PaymentService) {}
-
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      debtorName: ['', Validators.required],
-      debtorAccount: ['', Validators.required],
-      creditorName: ['', Validators.required],
-      creditorAccount: ['', Validators.required],
-      creditorBank: ['', Validators.required],
-      amount: [0, [Validators.required, Validators.min(0.01)]],
-      currency: ['CAD', Validators.required],
-      purpose: [''],
-      requestedExecutionDate: ['', Validators.required],
-      channel: ['AFT', Validators.required],
-      proxyType: [''],
-      proxyValue: [''],
-      billerName: [''],
-      billReferenceNumber: [''],
-    });
-  }
-
-  submit() {
-    const payload = this.form.value;
-
-  this.paymentService.makePayment(payload).subscribe({
-    next: () => {
-      this.success = true;
-      this.error = '';
-      this.form.reset();
-    },
-    error: (err) => {
-      this.success = false;
-      this.error = '❌ Payment failed.';
-      console.error(err);
-    }
-  });
-  }
+export class PaymentComponent {
+  selectedTab = 0;
 }

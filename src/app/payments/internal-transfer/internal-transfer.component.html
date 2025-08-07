@@ -1,0 +1,23 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+    <label>From Account:</label>
+    <input formControlName="debtorAccount">
+  
+    <label>To Account:</label>
+    <input formControlName="creditorAccount">
+  
+    <label>Amount:</label>
+    <input formControlName="amount" type="number">
+  
+    <label>Currency:</label>
+    <input formControlName="currency">
+  
+    <label>Purpose:</label>
+    <input formControlName="purpose">
+  
+    <label>Date:</label>
+    <input formControlName="requestedExecutionDate" type="date">
+  
+    <button type="submit">Transfer</button>
+    <div *ngIf="success">✅ Payment successful</div>
+    <div *ngIf="error">{{ error }}</div>
+  </form>

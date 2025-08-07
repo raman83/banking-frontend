@@ -1,0 +1,29 @@
+<div class="payment-section">
+    <h3>External Transfer (ACH / RTR)</h3>
+  
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="form-grid">
+        <input type="text" placeholder="Debtor Name" formControlName="debtorName" />
+        <input type="text" placeholder="Debtor Account" formControlName="debtorAccount" />
+        <input type="text" placeholder="Creditor Name" formControlName="creditorName" />
+        <input type="text" placeholder="Creditor Account" formControlName="creditorAccount" />
+        <input type="text" placeholder="Creditor Bank" formControlName="creditorBank" />
+        <input type="number" placeholder="Amount" formControlName="amount" />
+        <input type="text" placeholder="Currency" formControlName="currency" />
+        <input type="text" placeholder="Purpose" formControlName="purpose" />
+        <input type="date" formControlName="requestedExecutionDate" />
+        <select formControlName="channel">
+          <option value="AFT">AFT</option>
+          <option value="RTR">RTR</option>
+        </select>
+        <input type="text" placeholder="Proxy Type (for RTR)" formControlName="proxyType" />
+        <input type="text" placeholder="Proxy Value (for RTR)" formControlName="proxyValue" />
+      </div>
+  
+      <button type="submit" [disabled]="form.invalid">Submit</button>
+  
+      <p *ngIf="success" class="success-msg">✅ Payment successful!</p>
+      <p *ngIf="error" class="error-msg">{{ error }}</p>
+    </form>
+  </div>
+  
