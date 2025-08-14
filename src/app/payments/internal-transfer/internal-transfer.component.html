@@ -1,23 +1,71 @@
-<form [formGroup]="form" (ngSubmit)="submit()">
-    <label>From Account:</label>
-    <input formControlName="debtorAccount">
-  
-    <label>To Account:</label>
-    <input formControlName="creditorAccount">
-  
-    <label>Amount:</label>
-    <input formControlName="amount" type="number">
-  
-    <label>Currency:</label>
-    <input formControlName="currency">
-  
-    <label>Purpose:</label>
-    <input formControlName="purpose">
-  
-    <label>Date:</label>
-    <input formControlName="requestedExecutionDate" type="date">
-  
-    <button type="submit">Transfer</button>
-    <div *ngIf="success">✅ Payment successful</div>
-    <div *ngIf="error">{{ error }}</div>
+<div class="payment-section">
+  <h3>Internal Transfer</h3>
+
+  <!-- Accounts loader / error -->
+  <div *ngIf="loadingAccounts">Loading your accounts…</div>
+  <div *ngIf="loadError" class="error-msg">{{ loadError }}</div>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loadingAccounts && !loadError">
+    <div class="form-grid">
+      <!-- FROM -->
+      <div class="field">
+        <label>From Account</label>
+        <select formControlName="fromAccountId">
+          <option value="" disabled>Select account</option>
+          <option *ngFor="let acc of accounts" [value]="acc.id">
+            {{ acc.nickname }} ({{ acc.maskedAccountNumber }}) — {{ acc.balance | number:'1.2-2' }} {{ acc.currency }}
+          </option>
+        </select>
+      </div>
+
+      <!-- TO -->
+      <div class="field">
+        <label>To Account</label>
+        <select formControlName="toAccountId">
+          <option value="" disabled>Select account</option>
+          <option *ngFor="let acc of toAccounts" [value]="acc.id">
+            {{ acc.nickname }} ({{ acc.maskedAccountNumber }})
+          </option>
+        </select>
+      </div>
+
+      <!-- AMOUNT -->
+      <div class="field">
+        <label>Amount</label>
+        <input type="number" formControlName="amount" min="0.01" step="0.01" placeholder="0.00" />
+        <small *ngIf="fromAccount">Available: {{ fromAccount.balance | number:'1.2-2' }} {{ fromAccount.currency }}</small>
+      </div>
+
+      <!-- CURRENCY (auto from From account) -->
+      <div class="field">
+        <label>Currency</label>
+        <input type="text" formControlName="currency"  [disabled]="true">
+      </div>
+
+      <!-- PURPOSE -->
+      <div class="field">
+        <label>Purpose</label>
+        <input type="text" formControlName="purpose" placeholder="e.g., Move to Savings" />
+      </div>
+
+      <!-- DATE -->
+      <div class="field">
+        <label>Date</label>
+        <input type="date" formControlName="requestedExecutionDate" />
+      </div>
+    </div>
+
+    <!-- Cross-field validation errors -->
+    <div *ngIf="hasSameAccountError" class="error-msg">
+      From and To accounts cannot be the same.
+    </div>
+    <div *ngIf="hasInsufficientBalanceError" class="error-msg">
+      Insufficient balance in the From account for this amount.
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Transfer</button>
+
+    <p *ngIf="success" class="success-msg">✅ Transfer successful!</p>
+    <p *ngIf="error" class="error-msg">{{ error }}</p>
   </form>
+</div>

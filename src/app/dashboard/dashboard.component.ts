@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.accountService.getAccounts().subscribe((accounts: any[]) => {
+    this.accountService.getAccountsByCustomer('reyansh').subscribe((accounts: any[]) => {
       this.accounts = accounts;
     });
   }

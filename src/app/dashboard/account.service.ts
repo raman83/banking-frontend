@@ -1,25 +1,29 @@
-import { Injectable } from '@angular/core';
+// src/app/shared/account.service.ts  (ya jaha tumhara AccountService hai)
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+export type Account = {
+  id: string;
+  nickname: string;
+  maskedAccountNumber: string;
+  balance: number;
+  currency: string;
+  accountType?: string;
+  accountSubType?: string;
+};
+
+@Injectable({ providedIn: 'root' })
 export class AccountService {
+  private http = inject(HttpClient);
+  private baseUrl = 'http://localhost:8084/api/v1';
 
-  private apiUrl = 'http://localhost:8084/api/v1/customers/reyansh/accounts';  // API for accounts
+  // Dashboard wala getAccounts() agar already hai to keep it
+  // getAccounts(): Observable<Account[]> { ... }
 
-  constructor(private http: HttpClient) {}
-
-  // Method to get accounts with Authorization header
-  getAccounts(): Observable<any[]> {
-    // Get the token from localStorage (or wherever it is stored)
-    const token = localStorage.getItem('token'); 
-
-    // Set the headers with the token
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
-    // Make the API request with the Authorization header
-    return this.http.get<any[]>(this.apiUrl, { headers });
+  getAccountsByCustomer(customerId: string): Observable<Account[]> {
+    const token = localStorage.getItem('token'); // or 'token' if that's your key
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : undefined;
+    return this.http.get<Account[]>(`${this.baseUrl}/customers/${customerId}/accounts`, { headers });
   }
 }
